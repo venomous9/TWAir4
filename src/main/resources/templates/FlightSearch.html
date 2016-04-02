@@ -33,12 +33,14 @@
         <th>To</th>
         <th>Departure Time</th>
         <th>Arrival Time</th>
-        <tr th:each="flight:${flights}">
-           <td th:text="${flight.number}"></td>
-           <td th:text="${flight.source}"></td>
-           <td th:text="${flight.destination}"></td>
-           <td th:text="${flight.departureTime.getTime()}"></td>
-           <td th:text="${flight.arrivalTime.getTime()}"></td>
+        <th>Total cost</th>
+        <tr th:each="flight_with_query_info:${flights_with_query_info}">
+           <td th:text="${flight_with_query_info.flight.number}"></td>
+           <td th:text="${flight_with_query_info.flight.source}"></td>
+           <td th:text="${flight_with_query_info.flight.destination}"></td>
+           <td th:text="${flight_with_query_info.flight.departureTime.getTime()}"></td>
+            <td th:text="${flight_with_query_info.flight.arrivalTime.getTime()}"></td>
+            <td th:text="${flight_with_query_info.getTotalCost()}"></td>
         </tr>
     </table>
 </div>

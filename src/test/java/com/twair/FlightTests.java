@@ -4,10 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -105,6 +102,19 @@ public class FlightTests {
     public void shouldReturnFalseIfThereAreNoSeatsOfThatClass() throws Exception {
         Flight flight = new Flight("F001", source, dest, plane, departure, arrival, travelClasses);
         Assert.assertFalse(flight.hasClass(ClassType.BUSINESS));
+    }
+
+    @Test
+    public void shouldHaveFlightCost() throws Exception {
+        Currency currency = Currency.getInstance("USD");
+        Map<ClassType, Money> prices = new HashMap<>();
+        prices.put(ClassType.ECONOMY, new Money(currency, 100));
+        prices.put(ClassType.ECONOMY, new Money(currency, 100));
+        prices.put(ClassType.ECONOMY, new Money(currency, 100));
+        Flight flight = new Flight("F001", source, dest, plane, departure, arrival,
+                travelClasses, prices);
+        Assert.assertEquals(100, flight.getMoney().get(ClassType.ECONOMY).getValue());
+        Assert.assertEquals("USD", flight.getMoney().get(ClassType.ECONOMY).getCurrency().getCurrencyCode());
     }
 
 }

@@ -1,8 +1,5 @@
 package com.twair;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Flight {
     private String source;
@@ -12,6 +9,7 @@ public class Flight {
     private final Integer availableSeats;
     private Calendar departureTime;
     private Calendar arrivalTime;
+    private Map<ClassType, Money> money;
     private Map<ClassType, TravelClass> travelClassMap = new HashMap<>();
 
 
@@ -22,6 +20,23 @@ public class Flight {
         this.number = number;
         this.availableSeats = plane.getNumberOfSeats();
         setScheduleTime(departure, arrival);
+        for(TravelClass travelClass : travelClasses) {
+            travelClassMap.put(travelClass.getClassType(), travelClass);
+        }
+    }
+
+    public Flight(String number, String source, String destination, Plane plane, Calendar
+            departure, Calendar arrival, List<TravelClass> travelClasses, Map<ClassType, Money>
+            money)
+            throws
+            Exception {
+        this.source = source;
+        this.destination = destination;
+        this.plane = plane;
+        this.number = number;
+        this.availableSeats = plane.getNumberOfSeats();
+        setScheduleTime(departure, arrival);
+        this.money = money;
         for(TravelClass travelClass : travelClasses) {
             travelClassMap.put(travelClass.getClassType(), travelClass);
         }
@@ -64,5 +79,13 @@ public class Flight {
         }
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
+    }
+
+    public Map<ClassType, Money> getMoney() {
+        return money;
+    }
+
+    public void setMoney(Map<ClassType, Money> money) {
+        this.money = money;
     }
 }
