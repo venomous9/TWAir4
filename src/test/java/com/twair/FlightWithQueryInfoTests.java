@@ -45,7 +45,7 @@ public class FlightWithQueryInfoTests {
             travelClasses, prices);
     FlightWithQueryInfo flightWithQueryInfo = new FlightWithQueryInfo(flight, passengers,
             ClassType.BUSINESS);
-    Assert.assertEquals("20000$", flightWithQueryInfo.getTotalCost());
+    Assert.assertEquals("1000$", flightWithQueryInfo.getTotalCost());
 
   }
 }
