@@ -28,7 +28,6 @@ public class FlightTests {
         arrival = new GregorianCalendar(2016,3,10, 10, 10, 0);
         travelClasses = new ArrayList();
         travelClasses.add(new TravelClass(ClassType.ECONOMY, 30));
-
         mockEconomyClass = mock(TravelClass.class);
         mockTravelClasses = new ArrayList();
         mockTravelClasses.add(mockEconomyClass);
@@ -113,8 +112,35 @@ public class FlightTests {
         prices.put(ClassType.ECONOMY, new Money(currency, 100));
         Flight flight = new Flight("F001", source, dest, plane, departure, arrival,
                 travelClasses, prices);
-        Assert.assertEquals(100, flight.getMoney().get(ClassType.ECONOMY).getValue());
-        Assert.assertEquals("USD", flight.getMoney().get(ClassType.ECONOMY).getCurrency().getCurrencyCode());
+        Assert.assertEquals(100, flight.getPrices().get(ClassType.ECONOMY).getValue());
+        Assert.assertEquals("USD", flight.getPrices().get(ClassType.ECONOMY).getCurrency().getCurrencyCode());
     }
+
+    @Test
+    public void shouldReturnOccupiedSeatsForClassType() throws Exception{
+        Currency currency = Currency.getInstance("USD");
+        travelClasses.get(0).book(15);
+        Map<ClassType, Money> prices = new HashMap<>();
+        prices.put(ClassType.ECONOMY, new Money(currency, 100));
+        prices.put(ClassType.ECONOMY, new Money(currency, 100));
+        prices.put(ClassType.ECONOMY, new Money(currency, 100));
+        Flight flight = new Flight("F001", source, dest, plane, departure, arrival,
+                travelClasses, prices);
+        Assert.assertEquals(15, flight.getOccupiedSeats(ClassType.ECONOMY));
+    }
+
+    @Test
+    public void shouldReturnTotalSeatsForClassType() throws Exception{
+        Currency currency = Currency.getInstance("USD");
+        Map<ClassType, Money> prices = new HashMap<>();
+        prices.put(ClassType.ECONOMY, new Money(currency, 100));
+        prices.put(ClassType.ECONOMY, new Money(currency, 100));
+        prices.put(ClassType.ECONOMY, new Money(currency, 100));
+        Flight flight = new Flight("F001", source, dest, plane, departure, arrival,
+                travelClasses, prices);
+        Assert.assertEquals(30, flight.getTotalSeats(ClassType.ECONOMY));
+    }
+
+
 
 }

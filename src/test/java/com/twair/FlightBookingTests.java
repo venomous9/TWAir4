@@ -8,7 +8,7 @@ import java.util.*;
 
 import static org.mockito.Mockito.mock;
 
-public class FlightWithQueryInfoTests {
+public class FlightBookingTests {
   private String source;
   private String dest;
   private Plane plane;
@@ -26,13 +26,14 @@ public class FlightWithQueryInfoTests {
     departure = new GregorianCalendar(2016,3,10, 9, 10, 0);
     arrival = new GregorianCalendar(2016,3,10, 10, 10, 0);
     travelClasses = new ArrayList();
-    travelClasses.add(new TravelClass(ClassType.ECONOMY, 30));
+    travelClasses.add(new TravelClass(ClassType.ECONOMY, 100));
 
     mockEconomyClass = mock(TravelClass.class);
     mockTravelClasses = new ArrayList();
     mockTravelClasses.add(mockEconomyClass);
 
   }
+
   @Test
   public void shouldCalculateTotalCost() throws Exception{
     int passengers = 10;
@@ -43,9 +44,34 @@ public class FlightWithQueryInfoTests {
     prices.put(ClassType.FIRST, new Money(currency, 100));
     Flight flight = new Flight("F001", source, dest, plane, departure, arrival,
             travelClasses, prices);
-    FlightWithQueryInfo flightWithQueryInfo = new FlightWithQueryInfo(flight, passengers,
+    FlightBooking flightBooking = new FlightBooking(flight, passengers,
             ClassType.BUSINESS);
-    Assert.assertEquals("1000$", flightWithQueryInfo.getTotalCost());
+    Assert.assertEquals("1000$", flightBooking.getTotalCost());
+  }
+
+  @Test
+  public void shouldCalculateTotalCostBasedOnAvailableSeatsForEconomyClassType() throws Exception{
+    int passengers = 10;
+    Currency currency = Currency.getInstance("USD");
+    Map<ClassType, Money> prices = new HashMap<>();
+    prices.put(ClassType.ECONOMY, new Money(currency, 100));
+    prices.put(ClassType.BUSINESS, new Money(currency, 100));
+    prices.put(ClassType.FIRST, new Money(currency, 100));
+    Flight flight = new Flight("F001", source, dest, plane, departure, arrival,
+            travelClasses, prices);
+
+    travelClasses.get(0).book(30);
+    FlightBooking flightBooking = new FlightBooking(flight, passengers,
+            ClassType.ECONOMY);
+    Assert.assertEquals("1000$", flightBooking.getTotalCost());
+
+    travelClasses.get(0).book(15);
+    Assert.assertEquals("1300$", flightBooking.getTotalCost());
+
+    travelClasses.get(0).book(45);
+    Assert.assertEquals("1600$", flightBooking.getTotalCost());
+
 
   }
+
 }

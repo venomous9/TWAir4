@@ -31,11 +31,11 @@ public class DataSource {
         Currency currency = Currency.getInstance("USD");
         Map<ClassType, Money> prices = new HashMap<>();
         prices.put(ClassType.ECONOMY, new Money(currency, 100));
-        prices.put(ClassType.ECONOMY, new Money(currency, 100));
-        prices.put(ClassType.ECONOMY, new Money(currency, 100));
-        travelClasses.add(new TravelClass(ClassType.ECONOMY, 195));
-        travelClasses.add(new TravelClass(ClassType.BUSINESS, 35));
-        travelClasses.add(new TravelClass(ClassType.FIRST, 8));
+        prices.put(ClassType.BUSINESS, new Money(currency, 200));
+        prices.put(ClassType.FIRST, new Money(currency, 300));
+        travelClasses.add(new TravelClass(ClassType.ECONOMY, 200));
+        travelClasses.add(new TravelClass(ClassType.BUSINESS, 100));
+        travelClasses.add(new TravelClass(ClassType.FIRST, 50));
         Flight flight1 = new Flight("F001", locations.get(0), locations.get(1), planes.get(0),
                 new GregorianCalendar(2016,3,10, 9, 10, 0), new GregorianCalendar(2016,3,10, 9,
                 12, 0), travelClasses, prices);
@@ -45,7 +45,6 @@ public class DataSource {
         Flight flight2 = new Flight("F002", locations.get(0), locations.get(1), planes.get(1),
                 new GregorianCalendar(2016,3,11, 9, 10, 0), new GregorianCalendar(2016,3,11, 9,
                 12, 0), travelClasses, prices);
-
         travelClasses = new ArrayList<>();
         travelClasses.add(new TravelClass(ClassType.ECONOMY, 152));
         travelClasses.add(new TravelClass(ClassType.BUSINESS, 20));

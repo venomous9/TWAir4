@@ -28,4 +28,12 @@ public class TravelClass {
     public ClassType getClassType() {
         return classType;
     }
+
+    public int getOccupiedSeats() {
+        return occupiedSeats;
+    }
+
+    public int getTotalSeats() {
+        return totalSeats;
+    }
 }

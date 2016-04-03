@@ -28,12 +28,12 @@ public class TwAirApplication {
 			matchingFlights = matchingFlights.byDeparture(searchForm.getDepartureDate());
 			matchingFlights = matchingFlights.byClassType(searchForm.getClassType());
 			matchingFlights = matchingFlights.byAvailableSeats(searchForm.getClassType(), searchForm.getNumberSeats());
-			List<FlightWithQueryInfo> matchingFlightWithQueryInfo = new ArrayList<>();
+			List<FlightBooking> matchingFlightBooking = new ArrayList<>();
 			for (Flight flight : matchingFlights.getFlightList()) {
-				matchingFlightWithQueryInfo.add(new FlightWithQueryInfo(flight, searchForm.getNumberSeats
+				matchingFlightBooking.add(new FlightBooking(flight, searchForm.getNumberSeats
 								(), searchForm.getClassType()));
 			}
-			model.addAttribute("flights_with_query_info", matchingFlightWithQueryInfo);
+			model.addAttribute("flightBookings", matchingFlightBooking);
 		}catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("flights", new ArrayList());

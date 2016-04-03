@@ -9,7 +9,7 @@ public class Flight {
     private final Integer availableSeats;
     private Calendar departureTime;
     private Calendar arrivalTime;
-    private Map<ClassType, Money> money;
+    private Map<ClassType, Money> prices;
     private Map<ClassType, TravelClass> travelClassMap = new HashMap<>();
 
 
@@ -27,7 +27,7 @@ public class Flight {
 
     public Flight(String number, String source, String destination, Plane plane, Calendar
             departure, Calendar arrival, List<TravelClass> travelClasses, Map<ClassType, Money>
-            money)
+                          prices)
             throws
             Exception {
         this.source = source;
@@ -36,7 +36,7 @@ public class Flight {
         this.number = number;
         this.availableSeats = plane.getNumberOfSeats();
         setScheduleTime(departure, arrival);
-        this.money = money;
+        this.prices = prices;
         for(TravelClass travelClass : travelClasses) {
             travelClassMap.put(travelClass.getClassType(), travelClass);
         }
@@ -81,11 +81,20 @@ public class Flight {
         this.arrivalTime = arrivalTime;
     }
 
-    public Map<ClassType, Money> getMoney() {
-        return money;
+    public Map<ClassType, Money> getPrices() {
+        return prices;
     }
 
-    public void setMoney(Map<ClassType, Money> money) {
-        this.money = money;
+    public void setPrices(Map<ClassType, Money> prices) {
+        this.prices = prices;
     }
+
+    public int getOccupiedSeats(ClassType classType) {
+        return travelClassMap.get(classType).getOccupiedSeats();
+    }
+
+    public int getTotalSeats(ClassType classType) {
+        return travelClassMap.get(classType).getTotalSeats();
+    }
+
 }
